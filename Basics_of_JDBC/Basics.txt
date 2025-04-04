@@ -1,0 +1,26 @@
+MySql code on which we are working :
+
+-- Create the Database
+CREATE DATABASE TestJDBS;
+
+--Switch on that Database:
+USE TestJDBC:
+
+-- Create the table
+CREATE TABLE batch24 (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    RegNO VARCHAR(20)
+);
+
+-- Insert the data into the table
+INSERT INTO batch24 (id, name, RegNO) VALUES
+(101, 'Hariom Puri', '24MIM10080'),
+(102, 'Ram Kumar', '24MIM10007'),
+(103, 'Bikram Kumar', '24MIM10013'),
+(104, 'Amit Kumar', '24MIM10090');
+
+-- Select all data from the table to verify
+SELECT * FROM batch24;
+
+
