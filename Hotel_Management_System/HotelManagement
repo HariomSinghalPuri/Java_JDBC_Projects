@@ -1,0 +1,82 @@
+DataBase Name --> Hotel-DB
+Table Name --> Reservations
+Schema -->
+          --> reservation-id int Auto-increment
+          --> guest-name varchar not null
+          --> room-number int not null
+          --> contact-number varchar not null
+          --> reservation-date timestamp default
+
+MySQL Code:
+<<<<<<------------------------------------------------------------------------------------------------------------->>>>>
+mysql> CREATE DATABASE hotel_db;
+mysql> use hotel_db;
+mysql> CREATE TABLE reservations(
+    -> reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+    -> guest_name VARCHAR(255) NOT NULL,
+    -> room_number INT NOT NULL,
+    -> contact_number VARCHAR(10) NOT NULL,
+    -> reservation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -> );
+mysql> DESC reservations;
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
+BRIEF EXPLANATION OF HOTEL MANAGEMENT :
+
+Key Components of the Code:
+
+1.Database Connection:
+   A.The program connects to a MySQL database (hotel_db) using JDBC.
+   B.The connection details (URL, username, password) are stored in constants (url, username, password).
+   C.The com.mysql.cj.jdbc.Driver is loaded to establish the connection.
+
+2.Main Menu:
+     A.The program presents a menu with options for:
+       1.Reserving a room.
+       2.Viewing all reservations.
+       3.Getting a room number by reservation ID and guest name.
+       4.Updating a reservation.
+       5.Deleting a reservation.
+       6.Exiting the system.
+
+     B.The user selects an option, and the corresponding method is called.
+
+3.Methods:
+
+   A.reserveRoom: Allows the user to reserve a room by entering guest details (name, room number, contact number).
+   The data is inserted into the reservations table.
+   B.viewReservations: Displays all current reservations from the reservations table in a formatted table-like structure.
+   C.getRoomNumber: Retrieves the room number for a specific reservation using the reservation ID and guest name.
+   D.updateReservation: Updates an existing reservation (guest name, room number, contact number) based on the reservation ID.
+   E.deleteReservation: Deletes a reservation from the database using the reservation ID.
+   F.reservationExists: A helper method to check if a reservation exists in the database for a given reservation ID.
+   G.exit: Exits the system with a countdown animation.
+
+4.Database Operations:
+   A.SQL queries are executed using Statement and ResultSet objects.
+   B.The reservations table is assumed to have the following columns:
+     1.reservation_id (primary key)
+     2.guest_name
+     3.room_number
+     4.contact_number
+     5.reservation_date (timestamp)
+
+
+5.Error Handling:
+   A.The program handles exceptions such as ClassNotFoundException (for JDBC driver) and SQLException (for database errors).
+   B.Errors are printed to the console for debugging.
+
+6.User Interaction:
+   A.The program uses a Scanner object to take user input for various operations.
+
+<<<<--------------------------------------------------------------------------------------------------------------->>>>>
+How It Works
+1.The program starts by connecting to the MySQL database.
+2.It displays a menu and waits for the user to choose an option.
+3.Based on the user's choice, it performs the corresponding operation (e.g., reserving a room, updating a reservation).
+4.The program continues running until the user chooses to exit.
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
+
+
+
