@@ -1,0 +1,94 @@
+1.First MySql Code for Further working:
+There Should be two tables:
+1. accounts
+2. user
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
+
+CREATE DATABASE banking_system;
+USE banking_system;
+
+CREATE TABLE accounts (
+    account_number BIGINT NOT NULL,
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    balance DECIMAL(10,2) NOT NULL,
+    security_pin CHAR(4) NOT NULL,
+    PRIMARY KEY (account_number),
+    UNIQUE KEY (email)
+);
+
+CREATE TABLE user (
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL PRIMARY KEY,
+    password VARCHAR(255) NOT NULL
+);
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
+
+1. BankingApp.java (Main Driver)
+-->Entry Point: The main() method starts the program.
+-->Initialization:
+   -->Loads MySQL JDBC driver.
+   -->Establishes a database connection (Connection).
+   -->Creates instances of:
+      -->User (for registration/login)
+      -->Accounts (for account management)
+      -->AccountManager (for transactions)
+
+-->Main Menu Loop:
+      -->Displays options:
+         1. Register → Calls User.register()
+         2. Login → Calls User.login()
+         3. Exit → Terminates the program
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
+
+2. User.java (User Authentication)
+-->Registration Flow (register()):
+    1.Takes user input: full_name, email, password.
+    2.Checks if the user exists (user_exist(email)).
+    3.If not, inserts the user into the User table.
+
+-->Login Flow (login()):
+   1.Takes input: email, password.
+   2.Validates credentials against the User table.
+   3.Returns the email if successful (used by BankingApp to proceed).
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
+
+3. Accounts.java (Account Handling)
+-->After Successful Login:
+   1.BankingApp checks if the user has an account (accounts.account_exist(email)).
+   2.If no account:
+      -->Option to Open Account (open_account(email)):
+         1.Takes input: full_name, initial_balance, security_pin.
+         2.Generates a new account_number (auto-incremented from the last account).
+         3.Inserts into the Accounts table.
+   3.If an account exists:
+      -->Retrieves account_number (getAccount_number(email)).
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
+
+4. AccountManager.java (Transactions)
+-->Logged-in User Menu:
+   1. Debit Money (debit_money(account_number)):
+        ->Checks security_pin.
+        ->Validates sufficient balance.
+        ->Updates the account balance.
+
+   2. Credit Money (credit_money(account_number)):
+        ->Checks security_pin.
+        ->Adds funds to the account.
+
+   3. Transfer Money (transfer_money(sender_account_number)):
+        ->Takes receiver’s account_number.
+        ->Validates sender’s security_pin and balance.
+        ->Updates both accounts in a transaction (atomic operation).
+
+   4. Check Balance (getBalance(account_number)):
+        ->Displays balance after security_pin validation.
+
+   5. Log Out → Returns to the main menu.
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
