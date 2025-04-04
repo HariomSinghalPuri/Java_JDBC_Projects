@@ -1,0 +1,19 @@
+----> Batch Processing in Java Database Connectivity (JDBC)
+Batch processing in JDBC allows you to group multiple SQL statements into a single batch and execute them together,
+which can significantly improve performance when you need to execute multiple statements against a database.
+
+----> Why Use Batch Processing?
+1.Improved performance (reduces network calls)
+2.Reduced JDBC driver overhead
+3.Atomic execution (when needed)
+4.Efficient for bulk operations
+
+----> Methods for Batch Processing
+JDBC provides three key methods for batch processing:
+
+1.addBatch() - Adds a statement to the batch
+2.executeBatch() - Executes all statements in the batch
+3.clearBatch() - Clears the current batch
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
+
