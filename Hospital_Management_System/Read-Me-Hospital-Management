@@ -1,0 +1,137 @@
+1. Doctor.java
+This class handles operations related to doctors in the hospital management system.
+
+-----> Key Methods
+1.viewDoctors()
+     -->Retrieves and displays all doctors from the database.
+     -->Executes a SQL query (SELECT * FROM doctors) to fetch doctor details.
+     -->Iterates through the result set and prints doctor information (ID, Name, Specialization) in a formatted table.
+
+Flow Control:
+     -->Establishes a prepared statement for the query.
+     -->Executes the query and processes the result set in a while loop.
+     -->Handles exceptions using try-catch.
+
+2.getDoctorById(int id)
+     -->Checks if a doctor with the given ID exists in the database.
+     -->Executes a SQL query (SELECT * FROM doctors WHERE id = ?) with the provided ID as a parameter.
+     -->returns true if the doctor exists; otherwise, returns false.
+Flow Control:
+     -->Prepares the statement with the doctor ID.
+     -->Executes the query and checks if a record exists using ResultSet.next().
+     -->Handles exceptions using try-catch.
+<<<<--------------------------------------------------------------------------------------------------------------->>>>>
+2. HospitalManagementSystem.java
+This is the main entry point for the application, providing a menu-driven interface for managing patients,
+doctors, and appointments.
+
+------> Key Functionalities
+1.Database Connection Setup
+     -->Connects to a MySQL database using JDBC (DriverManager.getConnection).
+     -->Loads the JDBC driver (Class.forName("com.mysql.cj.jdbc.Driver")).
+
+2.Menu Options
+     -->Displays options for managing patients, viewing doctors, booking appointments, and exiting the program.
+     -->Uses a switch-case structure to handle user input:
+        -->Option 1: Add Patient (calls Patient.addPatient()).
+        -->Option 2: View Patients (calls Patient.viewPatients()).
+        -->Option 3: View Doctors (calls Doctor.viewDoctors()).
+        -->Option 4: Book Appointment (calls bookAppointment() method).
+        -->Option 5: Exit the program.
+
+3.bookAppointment() Method
+     -->Books an appointment between a patient and a doctor for a specific date.
+     -->Checks if both patient and doctor exist (getPatientById() and getDoctorById() methods).
+     -->Verifies doctor's availability on the selected date using checkDoctorAvailability().
+     -->Inserts appointment details into the database if all conditions are met.
+Flow Control:
+     -->Collects patient ID, doctor ID, and appointment date from user input.
+     -->Validates patient and doctor existence using helper methods.
+     -->Checks availability using another helper method.
+     -->Executes an SQL insert query to book the appointment.
+     -->Handles exceptions using try-catch.
+
+4.checkDoctorAvailability() Method
+     -->Checks if a doctor is available on a specific date by querying appointments
+        (SELECT COUNT(*) FROM appointments WHERE doctor_id = ? AND appointment_date = ?).
+     -->Returns true if no appointment exists; otherwise, returns false.
+
+<<<<--------------------------------------------------------------------------------------------------------------->>>>>
+
+3. Patient.java
+This class handles operations related to patients in the hospital management system.
+
+----->Key Methods
+1.addPatient()
+     -->Adds a new patient to the database.
+     -->Collects patient details (Name, Age, Gender) from user input via Scanner.
+     -->Executes an SQL insert query (INSERT INTO patients(name, age, gender) VALUES(?, ?, ?)) to store patient data.
+Flow Control:
+     -->Prompts user for patient details.
+     -->Prepares and executes an SQL insert statement.
+     -->Prints success or failure messages based on affected rows.
+     -->Handles exceptions using try-catch.
+
+2.viewPatients()
+     -->Retrieves and displays all patients from the database.
+     -->Executes an SQL query (SELECT * FROM patients) to fetch patient details.
+     -->Iterates through the result set and prints patient information (ID, Name, Age, Gender) in a formatted table.
+Flow Control:
+     -->Establishes a prepared statement for querying patients.
+     -->Processes results in a loop to display formatted output.
+     -->Handles exceptions using try-catch.
+
+3.getPatientById(int id)
+     -->Checks if a patient with the given ID exists in the database.
+     -->Executes an SQL query (SELECT * FROM patients WHERE id = ?)
+        with the provided ID as a parameter.
+     -->Returns true if the patient exists; otherwise, returns false.
+
+<<<<--------------------------------------------------------------------------------------------------------------->>>>>
+
+SQL Codes :
+
+1.Patients Table :
+
+CREATE TABLE patients(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    age INT NOT NULL,
+    gender VARCHAR(10) NOT NULL
+);
+
+<<<<--------------------------------------------------------------------------------------------------------------->>>>>
+
+2. Doctors Table :
+
+CREATE TABLE doctors(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    specialization VARCHAR(255) NOT NULL
+);
+
+<<<<--------------------------------------------------------------------------------------------------------------->>>>>
+
+3. Appointments Tables :
+
+CREATE TABLE appointments(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    appointment_date DATE NOT NULL,
+    FOREIGN KEY (patient_id) REFERENCES patients(id),
+    FOREIGN KEY (doctor_id) REFERENCES doctors(id)
+);
+
+<<<<--------------------------------------------------------------------------------------------------------------->>>>>
+
+4. Fill this Table FOr Further Procedure:
+
+INSERT INTO DOCTORS(name, specialization) VALUES("Pankaj Jain", "Physician");
+INSERT INTO DOCTORS(name, specialization) VALUES("Harshit Amod", "NeuroSurgeon");
+SELECT * FROM DOCTORS;
+
+<<<<--------------------------------------------------------------------------------------------------------------->>>>>
+
+
+
