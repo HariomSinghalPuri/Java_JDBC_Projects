@@ -1,0 +1,85 @@
+Transactional handling in Java JDBC (Java Database Connectivity) refers to the management of database transactions to
+ensure data integrity and consistency.
+A transaction is a sequence of operations performed as a single logical unit of work.
+If all operations in the transaction are successful, the transaction is committed, making the changes permanent.
+If any operation fails, the transaction is rolled back, undoing all changes made during the transaction.
+
+Key Concepts in Transactional Handling
+ACID Properties:
+
+1.Atomicity: Ensures that all operations within a transaction are treated as a single unit. Either all operations are completed, or none are.
+2.Consistency: Ensures that the database remains in a consistent state before and after the transaction.
+3.Isolation: Ensures that transactions are isolated from each other until they are completed.
+4.Durability: Ensures that once a transaction is committed, the changes are permanent and survive system failures.
+
+Connection Object:
+The Connection object in JDBC is used to manage transactions. By default,
+each SQL statement is treated as a separate transaction that is automatically committed immediately after execution.
+
+Auto-Commit Mode:
+By default, the Connection object is in auto-commit mode, meaning each SQL statement is automatically committed after it is executed.
+
+To manage transactions manually, you need to disable auto-commit mode using connection.setAutoCommit(false).
+
+Commit and Rollback:
+Commit: connection.commit() is used to commit the transaction, making all changes permanent.
+Rollback: connection.rollback() is used to undo all changes made during the transaction if an error occurs.
+
+Steps for Transactional Handling in JDBC
+<<<------------------------------------------------------------------------------------------------------------------>>>
+1. Disable Auto-Commit Mode:
+
+connection.setAutoCommit(false);
+
+<<<------------------------------------------------------------------------------------------------------------------>>>
+
+Execute SQL Statements:
+2. Execute multiple SQL statements as part of the transaction.
+
+Statement stmt = connection.createStatement();
+stmt.executeUpdate("INSERT INTO Employees (id, name) VALUES (1, 'John Doe')");
+stmt.executeUpdate("UPDATE Employees SET name = 'Jane Doe' WHERE id = 1");
+
+<<<------------------------------------------------------------------------------------------------------------------>>>
+3. Commit the Transaction:
+If all statements execute successfully, commit the transaction.
+
+connection.commit();
+
+<<<------------------------------------------------------------------------------------------------------------------>>>
+4. Handle Exceptions and Rollback:
+If any statement fails, catch the exception and roll back the transaction.
+
+try {
+    // Execute SQL statements
+    connection.commit();
+} catch (SQLException e) {
+    connection.rollback();
+    e.printStackTrace();
+}
+
+<<<------------------------------------------------------------------------------------------------------------------>>>
+
+5. Re-enable Auto-Commit Mode (Optional):
+After the transaction is complete, you can re-enable auto-commit mode if needed.
+
+connection.setAutoCommit(true);
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
+MySql data :
+CREATE DATABASE mydatabase;
+USE mydatabase;
+
+CREATE TABLE accounts (
+    account_number VARCHAR(20) PRIMARY KEY,
+    balance DECIMAL(10,2) NOT NULL
+);
+
+INSERT INTO accounts (account_number, balance)
+VALUES
+    ("account123", 1000.25),
+    ("account256", 560.76),
+    ("account035", 750.50);
+
+
+<<<<<-------------------------------------------------------------------------------------------------------------->>>>>
