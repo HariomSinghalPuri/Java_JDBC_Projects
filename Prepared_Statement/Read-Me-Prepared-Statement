@@ -1,0 +1,93 @@
+In JDBC (Java Database Connectivity), a Prepared Statement is a feature used to execute precompiled SQL queries.
+It's part of the  package and is particularly useful for improving performance and preventing SQL injection attacks.
+
+Key Points About PreparedStatement:
+
+Precompiled SQL Query:
+The SQL query in a PreparedStatement is precompiled by the database.
+This means the SQL statement is parsed and optimized by the database once when the PreparedStatement is created.
+This can result in performance improvements when executing the same query multiple times with different parameters,
+as the database doesn’t need to parse and optimize the query each time.
+
+Parameterized Queries:
+PreparedStatement allows you to use placeholders (usually ?) for parameters in the SQL query.
+These placeholders are later replaced by actual values when the query is executed.
+This makes it easy to write secure, dynamic SQL queries without having to concatenate strings and worry about SQL injection.
+
+Advantages of PreparedStatement:
+Security: Helps prevent SQL injection by safely handling user input.
+Performance: Reuses the precompiled SQL query, making repeated queries faster.
+Cleaner Code: More readable code by avoiding manual string concatenation for dynamic queries.
+When to Use PreparedStatement:
+Dynamic queries where parameters need to be set dynamically.
+Frequent queries (e.g., inserting multiple records) where the same query structure is used.
+When you want to ensure the safety of the application against SQL injection vulnerabilities.
+
+<<<------------------------------------------------------------------------------------------------------------------>>>
+ MySql ----->
+
+ CREATE DATABASE mydatabase;
+ CREATE TABLE employees (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     name VARCHAR(50),
+     job_title VARCHAR(50),
+     salary DECIMAL(10,2)
+ );
+
+ INSERT INTO employees (name, job_title, salary) VALUES
+ ('Hariom', 'Software Developer', 765000.00),
+ ('Singhal', 'AI Engineer', 850000.00);
+
+ SELECT * FROM employees;
+
+ <<<----------------------------------------------------------------------------------------------------------------->>>
+
+Sample Code:
+
+package Prepared_Statement;
+import java.sql.*;
+
+public class Prepared_Statement {
+    public static void main(String[] args) throws ClassNotFoundException {
+        // Database URL
+        String url = "jdbc:mysql://127.0.0.1:3306/mydatabase";
+        String username = "root";
+        String password = "#Ep31ub5bsk@";
+        String query = "Required Query and remember no. of place holders(?)";
+
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Drivers Loaded Successfully");
+        }catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Connection con = DriverManager.getConnection(url,username,password);
+            System.out.println("Connection Loaded Successfully !!!");
+            Statement statement = con.createStatement();
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setString(1,"Hariom");   // if String put getString
+            // Remember to point placeHolders values
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Mysql datatype and Dataname = resultSet.get(datatype)(value);
+                ..........
+                ..........
+                System.out.println("JDBC Values"+ mysql dataname);
+                ..........
+                .........
+            }
+            resultSet.close();
+            preparedStatement.close();
+            con.close();
+            System.out.println("Connection Closed Successfully");
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+}
+
+<<<------------------------------------------------------------------------------------------------------------------>>>
